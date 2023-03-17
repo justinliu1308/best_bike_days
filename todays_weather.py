@@ -72,3 +72,11 @@ if response.status_code == 200:
 else:
     print(f"Error fetching weather data: status code {response.status_code}")
 
+# Additional testing for different regions to check rain, snow, timezone rows
+cities = ['Miami', 'Denver', 'Los Angeles', 'Seattle', 'Anchorage', 'Beijing', 'Moscow', 'Mexico City', 'Tahiti', 'Munich']
+for city in cities:
+    response = get_weather(city)
+    if response.status_code == 200:
+        create_table(response, city)
+    else:
+        print(f"Error fetching weather data: status code {response.status_code}")
