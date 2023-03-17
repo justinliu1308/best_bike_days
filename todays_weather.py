@@ -20,8 +20,10 @@ def create_table(current_weather_response, city):
 
     current_weather_response = current_weather_response.json()
     # Write JSON data to file to view
+    '''
     with open("json_weather.json", "w") as file:
         json.dump(current_weather_response, file, indent=4)
+    '''
     # Assigning weather data variables
     summary = current_weather_response['weather'][0]['description']
     real_temp = str(round(current_weather_response['main']['temp'])) + " °F"
@@ -72,7 +74,9 @@ if response.status_code == 200:
 else:
     print(f"Error fetching weather data: status code {response.status_code}")
 
+
 # Additional testing for different regions to check rain, snow, timezone rows
+'''
 cities = ['Miami', 'Denver', 'Los Angeles', 'Seattle', 'Anchorage', 'Beijing', 'Moscow', 'Mexico City', 'Tahiti', 'Munich']
 for city in cities:
     response = get_weather(city)
@@ -80,3 +84,4 @@ for city in cities:
         create_table(response, city)
     else:
         print(f"Error fetching weather data: status code {response.status_code}")
+'''
