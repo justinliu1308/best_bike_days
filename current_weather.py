@@ -5,6 +5,7 @@ from beautifultable import BeautifulTable
 
 def get_weather(city):
     # Fetch weather data using your unique API key from https://openweathermap.org/
+
     API_KEY = open('api_key.txt', 'r').read()
     current_weather_url = 'http://api.openweathermap.org/data/2.5/weather'
     parameters = {
@@ -20,10 +21,8 @@ def create_table(current_weather_response, city):
 
     current_weather_response = current_weather_response.json()
     # Write JSON data to file to view
-    '''
-    with open("json_weather.json", "w") as file:
+    with open("current_weather_response.json", "w") as file:
         json.dump(current_weather_response, file, indent=4)
-    '''
     # Assigning weather data variables
     summary = current_weather_response['weather'][0]['description']
     real_temp = str(round(current_weather_response['main']['temp'])) + " °F"
@@ -72,7 +71,7 @@ response = get_weather(city)
 if response.status_code == 200:
     create_table(response, city)
 else:
-    print(f"Error fetching weather data: status code {response.status_code}")
+    print(f"Error fetching weather data: Status code {response.status_code}")
 
 
 # Additional testing for different regions to check rain, snow, timezone rows
