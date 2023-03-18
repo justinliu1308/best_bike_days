@@ -1,0 +1,43 @@
+{
+    "coord": {
+        "lon": -77.0003,
+        "lat": 38.9171
+    },
+    "weather": [
+        {
+            "id": 802,
+            "main": "Clouds",
+            "description": "scattered clouds",
+            "icon": "03d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 49.32,
+        "feels_like": 44.71,
+        "temp_min": 46.51,
+        "temp_max": 51.48,
+        "pressure": 1007,
+        "humidity": 29
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 11.5,
+        "deg": 320
+    },
+    "clouds": {
+        "all": 40
+    },
+    "dt": 1679181430,
+    "sys": {
+        "type": 2,
+        "id": 2078663,
+        "country": "US",
+        "sunrise": 1679138104,
+        "sunset": 1679181433
+    },
+    "timezone": -14400,
+    "id": 4138106,
+    "name": "District of Columbia",
+    "cod": 200
+}
