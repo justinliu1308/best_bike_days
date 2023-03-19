@@ -20,16 +20,19 @@ def create_table(current_weather_response, city):
     # Receive response and format JSON data
 
     current_weather_response = current_weather_response.json()
+    
     # Write JSON data to file to view
     with open("current_weather_response.json", "w") as file:
         json.dump(current_weather_response, file, indent=4)
-    # Assigning weather data variables
+    
+    # Assign weather data variables
     summary = current_weather_response['weather'][0]['description']
     real_temp = str(round(current_weather_response['main']['temp'])) + " °F"
     feels_like = str(round(current_weather_response['main']['feels_like'])) + " °F"
     wind = str(round(current_weather_response['wind']['speed'])) + " mph"
     cloud = str(current_weather_response['clouds']['all']) + "% cloudy"
-    # Check for rain or snow, included in JSON only if present in current weather conditions
+    
+    # Check for rain or snow which is included in JSON only if present in current weather conditions
     rain = 0
     if 'rain' in current_weather_response:
         rain = str(current_weather_response['rain']['1h']) + " in"
@@ -41,7 +44,8 @@ def create_table(current_weather_response, city):
         timezone = "UTC+" + str(timezone)
     else:
         timezone = "UTC" + str(timezone)
-    # Creating table
+    
+    # Create output weather table
     table = BeautifulTable()
     table.rows.append([summary])
     table.rows.append([real_temp])
@@ -66,7 +70,7 @@ def create_table(current_weather_response, city):
     print(table)
 
 
-city = 'District of Columbia'
+city = 'Arlington,VA,US'
 response = get_weather(city)
 if response.status_code == 200:
     create_table(response, city)
@@ -76,7 +80,7 @@ else:
 
 # Additional testing for different regions to check rain, snow, timezone rows
 '''
-cities = ['Miami', 'Denver', 'Los Angeles', 'Seattle', 'Anchorage', 'Beijing', 'Moscow', 'Mexico City', 'Tahiti', 'Munich']
+cities = ['Miami', 'Denver,CO,US', 'Los Angeles', 'Seattle', 'Anchorage', 'Beijing', 'Moscow', 'Mexico City', 'Tahiti', 'Munich']
 for city in cities:
     response = get_weather(city)
     if response.status_code == 200:

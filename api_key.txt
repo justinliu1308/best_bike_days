@@ -1,1 +1,1 @@
-8420a82670643d7af6e8530781a0f36e
+<Paste your openweathermap API key here as plain text>

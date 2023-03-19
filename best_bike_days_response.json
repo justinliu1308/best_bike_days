@@ -1,17 +1,17 @@
 {
     "latitude": 39.0781,
     "longitude": -77.150635,
-    "generationtime_ms": 1.6709566116333008,
+    "generationtime_ms": 2.79998779296875,
     "utc_offset_seconds": -14400,
     "timezone": "America/New_York",
     "timezone_abbreviation": "EDT",
     "elevation": 136.0,
     "current_weather": {
-        "temperature": 42.7,
-        "windspeed": 14.1,
-        "winddirection": 284.0,
-        "weathercode": 0,
-        "time": "2023-03-18T21:00"
+        "temperature": 41.3,
+        "windspeed": 15.6,
+        "winddirection": 287.0,
+        "weathercode": 1,
+        "time": "2023-03-18T22:00"
     },
     "daily_units": {
         "time": "iso8601",
@@ -47,8 +47,8 @@
         "temperature_2m_max": [
             58.9,
             51.0,
-            38.8,
-            50.3,
+            38.7,
+            51.0,
             59.3,
             51.9,
             67.2,
@@ -65,8 +65,8 @@
         ],
         "temperature_2m_min": [
             47.8,
-            38.9,
-            22.3,
+            38.7,
+            22.6,
             24.0,
             32.1,
             40.9,
@@ -85,8 +85,8 @@
         "apparent_temperature_max": [
             55.7,
             44.8,
-            27.2,
-            43.4,
+            27.4,
+            41.9,
             53.1,
             44.8,
             66.4,
@@ -103,9 +103,9 @@
         ],
         "apparent_temperature_min": [
             41.3,
-            27.7,
-            11.0,
-            15.9,
+            26.1,
+            11.3,
+            15.8,
             25.4,
             33.7,
             41.4,
@@ -160,8 +160,8 @@
         ],
         "windspeed_10m_max": [
             14.3,
-            15.8,
-            16.8,
+            16.4,
+            17.5,
             9.1,
             7.0,
             11.2,
@@ -179,8 +179,8 @@
         ],
         "windgusts_10m_max": [
             25.3,
-            35.1,
-            36.0,
+            37.1,
+            37.6,
             16.3,
             19.0,
             26.6,

@@ -1,43 +1,44 @@
 {
     "coord": {
-        "lon": -77.0003,
-        "lat": 38.9171
+        "lon": -77.1043,
+        "lat": 38.881
     },
     "weather": [
         {
-            "id": 802,
+            "id": 803,
             "main": "Clouds",
-            "description": "scattered clouds",
-            "icon": "03d"
+            "description": "broken clouds",
+            "icon": "04n"
         }
     ],
     "base": "stations",
     "main": {
-        "temp": 49.32,
-        "feels_like": 44.71,
-        "temp_min": 46.51,
-        "temp_max": 51.48,
-        "pressure": 1007,
-        "humidity": 29
+        "temp": 44.26,
+        "feels_like": 37.63,
+        "temp_min": 41.88,
+        "temp_max": 46.33,
+        "pressure": 1011,
+        "humidity": 34
     },
     "visibility": 10000,
     "wind": {
-        "speed": 11.5,
-        "deg": 320
+        "speed": 13.8,
+        "deg": 290,
+        "gust": 21.85
     },
     "clouds": {
-        "all": 40
+        "all": 75
     },
-    "dt": 1679181430,
+    "dt": 1679191539,
     "sys": {
         "type": 2,
-        "id": 2078663,
+        "id": 2039825,
         "country": "US",
-        "sunrise": 1679138104,
-        "sunset": 1679181433
+        "sunrise": 1679138128,
+        "sunset": 1679181458
     },
     "timezone": -14400,
-    "id": 4138106,
-    "name": "District of Columbia",
+    "id": 4744709,
+    "name": "Arlington",
     "cod": 200
 }
