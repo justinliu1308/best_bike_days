@@ -126,7 +126,7 @@ def main():
             table = BeautifulTable()
             table.rows.append(['Max Temp', 'Apparent Max', 'Max Wind', 'Description'])
             for d in recommend_index:
-                table.rows.append([real_max_temp[d], apparent_max_temp[d], wind_max[d], weathercode_key[weathercode[d]]])
+                table.rows.append([str(round(real_max_temp[d])) + ' °F', str(round(apparent_max_temp[d])) + ' °F', str(round(wind_max[d])) + ' mph', weathercode_key[weathercode[d]]])
             table.columns.header = ['', city, 'Weather', '']
             table.rows.header = [''] + [day[d] for d in recommend_index]
             table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
