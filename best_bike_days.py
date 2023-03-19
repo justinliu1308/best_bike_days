@@ -141,8 +141,7 @@ def main():
     response = get_forecast(lat, long)
     if response == False:
         return
-    city = city_state_country.split(',')[0]
-    find_best_bike_days(response, city)
+    find_best_bike_days(response, city_state_country.split(',')[0])
 
 if __name__ == "__main__":
     main()
