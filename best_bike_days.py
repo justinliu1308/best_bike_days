@@ -134,14 +134,14 @@ def main():
         else:
             print("Unfortunately, no upcoming days are recommended for biking in the current 16-day forecast.")
 
-    city_state_country = 'Rockville,MD,US'
-    lat, long = get_geocode(city_state_country)
+    city = 'Rockville,MD,US'
+    lat, long = get_geocode(city)
     if lat == False:
         return
     response = get_forecast(lat, long)
     if response == False:
         return
-    find_best_bike_days(response, city_state_country.split(',')[0])
+    find_best_bike_days(response, city.split(',')[0])
 
 if __name__ == "__main__":
     main()

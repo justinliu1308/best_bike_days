@@ -1,17 +1,17 @@
 {
     "latitude": 39.0781,
     "longitude": -77.150635,
-    "generationtime_ms": 1.8330812454223633,
+    "generationtime_ms": 2.3070573806762695,
     "utc_offset_seconds": -14400,
     "timezone": "America/New_York",
     "timezone_abbreviation": "EDT",
     "elevation": 136.0,
     "current_weather": {
-        "temperature": 41.3,
-        "windspeed": 12.9,
-        "winddirection": 280.0,
-        "weathercode": 0,
-        "time": "2023-03-18T22:00"
+        "temperature": 38.7,
+        "windspeed": 15.1,
+        "winddirection": 289.0,
+        "weathercode": 3,
+        "time": "2023-03-18T23:00"
     },
     "daily_units": {
         "time": "iso8601",
