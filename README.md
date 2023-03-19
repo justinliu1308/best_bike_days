@@ -26,14 +26,18 @@ Usage:
 Current weather:
 
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/current_weather_screenshot.png)
+
 Best bike days recommendations:
 
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/best_bike_days_screenshot.png)
 
 ## Reference
 Open Weather Map website: https://openweathermap.org/
+
 Current weather API call docs: https://openweathermap.org/current
+
 Geocoding API call docs: https://openweathermap.org/api/geocoding-api
+
 Open-Meteo weather API call docs: https://open-meteo.com/en/docs
 
 
