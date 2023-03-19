@@ -34,10 +34,10 @@ Best bike days recommendations:
 ## Reference
 Open Weather Map website: https://openweathermap.org/
 
-Current weather API call docs: https://openweathermap.org/current
+Current weather API call docs: https://openweathermap.org/current/
 
-Geocoding API call docs: https://openweathermap.org/api/geocoding-api
+Geocoding API call docs: https://openweathermap.org/api/geocoding-api/
 
-Open-Meteo weather API call docs: https://open-meteo.com/en/docs
+Open-Meteo weather API call docs: https://open-meteo.com/en/docs/
 
 
