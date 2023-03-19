@@ -24,8 +24,10 @@ Usage:
 
 ## Output
 Current weather:
+
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/current_weather_screenshot.png)
 Best bike days recommendations:
+
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/best_bike_days_screenshot.png)
 
 ## Reference
