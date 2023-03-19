@@ -9,7 +9,7 @@ There are two different applications in this repo:
 Daily weather requirements that would result in a recommendation for biking are:
 - Temperature between 55-85 °F
 - Wind speed no more than 15 mph
-- No preciptation, and less than 0.2 inches of precipitation in the last 24 hours
+- No preciptation forecasted for the day, and less than 0.2 inches of precipitation in the previous 24 hours
 - The recommendation also considers wind gusts and the apparent temperature / real feel
 
 ## Usage
