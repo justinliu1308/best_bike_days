@@ -73,7 +73,7 @@ def create_table(current_weather_response, city):
 city = 'Arlington,VA,US'
 response = get_weather(city)
 if response.status_code == 200:
-    create_table(response, city)
+    create_table(response, city.split(',')[0])
 else:
     print(f"Error fetching weather data: Status code {response.status_code}")
 
