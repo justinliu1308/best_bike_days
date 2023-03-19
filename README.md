@@ -1,9 +1,9 @@
 # best_bike_days
 ## Description
-Fetch weather data and receive a computed output determining if there are upcoming days where the weather conditions are worth taking a few hours to go biking. This program is intended for regularly checking local weather data, so we use a set variable instead of command line user input.
+Fetch weather data and receive a computed output determining if there are upcoming days where the weather conditions are worth taking a few hours off to go biking. This program is intended for regularly checking local weather data, so we use a set variable for the city instead of command line user input.
 
 There are two different applications in this repo:
-1. todays_weather.py  -  Creates a simple table showing the current weather of a specified city
+1. todays_weather.py  -  Creates a simple, organized table showing the current weather of a specified city
 2. best_bike_days.py  -  Returns recommendations on upcoming days for biking based on the weather of a specified city
 
 Daily weather requirements that would result in a recommendation are:
@@ -18,7 +18,10 @@ Usage:
 2. For both applications, set the 'city' variable at the bottom of the file to your city name and run the python file.
 
 ## Output
-#![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshot_todays_weather.png)
+Current weather:
+![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshot_todays_weather.png)
+Best bike days recommendations:
+![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/......)   ###########
 
 ## Reference
 Open Weather Map website: https://openweathermap.org/

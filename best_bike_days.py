@@ -1,157 +1,148 @@
 import requests
 import json
-import time
 from beautifultable import BeautifulTable
-from datetime import datetime, timedelta
 
 
-def forecast(city):
-    # Fetch weather data using your unique API key from https://openweathermap.org/
-    API_KEY = open('api_key.txt', 'r').read()
-    url = 'http://api.openweathermap.org/data/2.5/forecast'
-    parameters = {
-        'q': city,
-        'appid': API_KEY,
-        'units': 'imperial'
-    }
-    response = requests.get(url, params=parameters)
-    return response
+def main():
+    def get_geocode(city_state_country):
+        # Geocode the target city with openweathermap API: https://openweathermap.org/api/geocoding-api
+        API_KEY = open('api_key.txt', 'r').read()
+        geocode_url = 'http://api.openweathermap.org/geo/1.0/direct'
+        geocode_parameters = {
+            'q':city_state_country,  # {city name},{state code},{country code} - last two optional. 'Rockville,MD,US'
+            'appid':API_KEY,
+            'limit':5
+        }
+        geocode_response = requests.get(geocode_url, params=geocode_parameters)
+        if geocode_response.status_code != 200:
+            print(f"Error getting geocode response from openweathermap.org: Status code {geocode_response.status_code}")
+            return False, False
+        geocode_response = geocode_response.json()
+        with open("geocode.json", "w") as file:
+            json.dump(geocode_response, file, indent=4)
+        lat = geocode_response[0]['lat']
+        long = geocode_response[0]['lon']
+        return lat, long
 
-def create_table(response, city):
-    # Receive response and format JSON data
+    def get_forecast(lat, long):
+        # Use geocode to get weather data from https://open-meteo.com/en/docs (free to use and no API key required)
+        # Provides daily forecast for 16 days
+        url = 'https://api.open-meteo.com/v1/forecast'
+        daily_parameters = (
+            "temperature_2m_max,"
+            "temperature_2m_min,"
+            "apparent_temperature_max,"
+            "apparent_temperature_min,"
+            "precipitation_sum,"
+            "weathercode,"
+            "windspeed_10m_max,"
+            "windgusts_10m_max"
+        )
+        parameters = {
+            'latitude':lat,
+            'longitude':long,
+            'daily': daily_parameters,
+            'current_weather':True,
+            'temperature_unit':'fahrenheit',
+            'windspeed_unit':'mph',
+            'precipiation_unit':'inch',
+            'timezone':'auto',
+            'past_days':1,
+            'forecast_days':16,
+        }
+        response = requests.get(url, params=parameters)
+        if response.status_code != 200:
+            print(f"Error fetching weather data: Status code {response.status_code}")
+            return False
+        response = response.json()
+        with open("best_bike_days_response.json", "w") as file:
+            json.dump(response, file, indent=4)
+        return response
 
-    response = response.json()
-    # Write JSON data to file to view
-    with open("json_weather.json", "w") as file:
-        json.dump(response, file, indent=4)
-    
-    # Sort JSON into arrays by type of weather info
-    local_time_raw = []
-    summary_raw = []
-    real_temp_raw = []
-    feels_like_raw = []
-    wind_raw = []
-    gust_raw = []
-    cloud_raw = []
-    rain_raw = []
-    snow_raw = []
-    for i in range(len(response['list'])):
-        local_time_raw.append(response['list'][i]['dt'])
-        summary_raw.append(response['list'][i]['weather'][0]['description'])
-        real_temp_raw.append(round(response['list'][i]['main']['temp']))
-        feels_like_raw.append(response['list'][i]['main']['feels_like'])
-        wind_raw.append(response['list'][i]['wind']['speed'])
-        gust_raw.append(response['list'][i]['wind']['gust'])
-        cloud_raw.append(response['list'][i]['clouds']['all'])
-        if 'rain' in response['list'][i]:
-            rain_raw.append(response['list'][i]['rain']['3h'])
+    def find_best_bike_days(response, city):
+        day = []
+        real_max_temp = []
+        apparent_max_temp = []
+        precipitation = []
+        weathercode = []
+        wind_max = []
+        gusts_max = []
+        for i in range(len(response['daily']['time'])):
+            day.append(response['daily']['time'][i])
+            real_max_temp.append(response['daily']['temperature_2m_max'][i])
+            apparent_max_temp.append(response['daily']['apparent_temperature_max'][i])
+            precipitation.append(response['daily']['precipitation_sum'][i])
+            weathercode.append(response['daily']['weathercode'][i])
+            wind_max.append(response['daily']['windspeed_10m_max'][i])
+            gusts_max.append(response['daily']['windgusts_10m_max'][i])
+        # print(real_max_temp)
+        # print(apparent_max_temp)
+        # print(precipitation)
+        # print(weathercode)
+        # print(wind_max)
+        # print(gusts_max)
+
+        # Weathercode description key
+        weathercode_key = {
+            0:'Clear sky',
+            1:'Mainly clear',
+            2:'Partly cloudy',
+            3:'Overcast',
+            45:'Fog',
+            48:'Depositing rime fog',
+            51:'Light drizzle',
+            53:'Moderate drizzle',
+            55:'Intense drizzle'
+            # Codes 56 and above indicate unsuitable conditions; omitted from weathercode_key
+        }
+        # Analyzing data starting from index 1; index 0 is yesterday's weather history
+        recommend_index = []
+        for i in range(1, len(real_max_temp)):
+            if real_max_temp[i] < 55 or real_max_temp[i] > 85:
+                continue
+            elif apparent_max_temp[i] < 50 or apparent_max_temp[i] > 85:
+                continue
+            elif precipitation[i] > 0 or precipitation[i-1] > 0.2:
+                continue
+            if weathercode[i] > 55:
+                continue
+            elif wind_max[i] > 15:
+                continue
+            elif gusts_max[i] > 35:
+                continue
+            else:
+                recommend_index.append(i)
+        # Format days to remove excess content (year and prefix zeroes in days, months). Default: 2023-03-16
+        for d in recommend_index:
+            date_month = day[d][5:7]
+            date_day = day[d][8:]
+            if date_month[0] == '0':
+                date_month = date_month[1]
+            if date_day[0] == '0':
+                date_day = date_day[1]
+            day[d] = date_month + '/' + date_day
+        # Create table
+        if len(recommend_index) > 0:
+            table = BeautifulTable()
+            table.rows.append(['Max Temp', 'Apparent Max', 'Max Wind', 'Description'])
+            for d in recommend_index:
+                table.rows.append([real_max_temp[d], apparent_max_temp[d], wind_max[d], weathercode_key[weathercode[d]]])
+            table.columns.header = ['', city, 'Weather', '']
+            table.rows.header = [''] + [day[d] for d in recommend_index]
+            table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
+            print(table)
         else:
-            rain_raw.append(0)
-        if 'snow' in response['list'][i]:
-            snow_raw.append(response['list'][i]['snow']['3h']) 
-        else:
-            snow_raw.append(0)
-    
-    # Data from API is at 3-hour intervals, or 8 datapoints/day. Average the values and condence into 1 datapoint/day.
-    # Get current Unix time
-    current_unix_time = time.time()
-    # Convert Unix time to datetime object
-    current_datetime = datetime.fromtimestamp(current_unix_time)    
-    unix_day_start = []
-    for i in range(5):      # Free API limits data to 5-day forecast
-        # Add days to datetime object
-        next_day_datetime = current_datetime + timedelta(days=i+1)
-        # Set time component to 00:00:00
-        next_day_datetime = next_day_datetime.replace(hour=0, minute=0, second=0, microsecond=0)
-        # Convert datetime object back to Unix time
-        next_day_unix_time = int(next_day_datetime.timestamp())
-        unix_day_start.append(next_day_unix_time)
+            print("Unfortunately, no upcoming days are recommended for biking in the current 16-day forecast.")
 
-    local_time = []
-    summary = []
-    real_temp = []
-    feels_like = []
-    wind = []
-    gust = []
-    cloud = []
-    rain = []
-    snow = []
-    day = 0
-    forecast_day = 0
-    for i in range(len(local_time_raw)):
-        if local_time_raw[i] >= unix_day_start[day]:
-            pass
+    city_state_country = 'Rockville,MD,US'
+    lat, long = get_geocode(city_state_country)
+    if lat == False:
+        return
+    response = get_forecast(lat, long)
+    if response == False:
+        return
+    city = city_state_country.split(',')[0]
+    find_best_bike_days(response, city)
 
-
-
-    # for i in range(len(summary)):
-    #     print(local_time_RAW[i], summary[i])
-    
-
-
-    # Converting local unix time to human readable format
-    # for i in range(len(local_time_RAW)):
-    #     dt = datetime.fromtimestamp(local_time_RAW[i])          # Convert Unix time to datetime object
-    #     date_string = dt.strftime("%Y-%m-%d %H:%M:%S")  # Convert datetime object to human-readable string
-    #     local_time_RAW[i] = date_string
-    #     print(date_string, summary[i])
-
-    '''
-    # Assigning weather data variables
-    summary = response['weather'][0]['description']
-    real_temp = str(round(response['main']['temp'])) + " °F"
-    feels_like = str(round(response['main']['feels_like'])) + " °F"
-    wind = str(round(response['wind']['speed'])) + " mph"
-    cloud = str(response['clouds']['all']) + "% cloudy"
-    # Check for rain or snow, included in JSON only if present in current weather conditions
-    rain = 0
-    if 'rain' in response:
-        rain = str(response['rain']['1h']) + " in"
-    snow = 0
-    if 'snow' in response:
-        snow = str(response['snow']['1h']) + " in"
-    timezone = round(response['timezone'] / 3600)
-    if timezone >= 0:
-        timezone = "UTC+" + str(timezone)
-    else:
-        timezone = "UTC" + str(timezone)
-    # Creating table
-    table = BeautifulTable()
-    table.rows.append([summary])
-    table.rows.append([real_temp])
-    table.rows.append([feels_like])
-    table.rows.append([wind])
-    table.rows.append([cloud])
-    if rain:
-        table.rows.append([rain])
-    if snow:
-        table.rows.append([snow])
-    table.rows.append([timezone])
-    table.columns.header = [city + " Weather"]
-    if rain and snow:
-        table.rows.header = ["Summary", "Real Temp", "Feels Like", "Wind", "Cloudiness", "Rain", "Snow", "Timezone"]
-    elif rain:
-        table.rows.header = ["Summary", "Real Temp", "Feels Like", "Wind", "Cloudiness", "Rain", "Timezone"]
-    elif snow:
-        table.rows.header = ["Summary", "Real Temp", "Feels Like", "Wind", "Cloudiness", "Snow", "Timezone"]
-    else:
-        table.rows.header = ["Summary", "Real Temp", "Feels Like", "Wind", "Cloudiness", "Timezone"]
-    table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
-    print(table)
-    '''
-
-    # Results shown up until current time of the 5th day from today due to limits on free API version
-    # If you are running the application at 11am on Monday, it will only receive data until 11am Saturday
-    # and thus the output for Saturday will be based on only the data received.
-
-city = 'District of Columbia'
-#city = 'taipei'
-#city = 'atlanta'
-response = forecast(city)
-if response.status_code == 200:
-    create_table(response, city)
-else:
-    print(f"Error fetching weather data: status code {response.status_code}")
-
-
-
+if __name__ == "__main__":
+    main()
