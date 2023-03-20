@@ -26,6 +26,7 @@ Usage:
 
 ## Output
 Current weather version 2:
+
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_rain.png)
 
 Current weather:
