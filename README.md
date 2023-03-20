@@ -1,6 +1,6 @@
 # best_bike_days
 ## Description
-Fetches weather data and displays current weather on the command line, current weather in an external window, and computes an response determining if there are upcoming days where the weather conditions are worth taking a few hours off to go biking.
+Fetches weather data and displays current weather on the command line, current weather in an external window, and computes a response determining if there are upcoming days where the weather conditions are worth taking a few hours off to go biking.
 
 There are three applications in this repo:
 1. current_weather_v2.py - Opens an external window where the user can search for current weather via GUI.
