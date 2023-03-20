@@ -47,5 +47,3 @@ Current weather API call docs: https://openweathermap.org/current/
 Geocoding API call docs: https://openweathermap.org/api/geocoding-api/
 
 Open-Meteo weather API call docs: https://open-meteo.com/en/docs/
-
-
