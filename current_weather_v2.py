@@ -1,13 +1,33 @@
-from tkinter import *       # need to import tinker as a whole first
+from tkinter import *       # import tinker as a whole first
 import tkinter as tk        # then import tkinter as tk
 import tkinter.messagebox
 import requests
+import datetime
 from PIL import ImageTk, Image
 
 
+def get_date():
+    # Get current date and format for display
+
+    curr_date = datetime.datetime.now()
+    date_f = curr_date.strftime("%A, %m/%d/%Y") # date formatted like 'Sunday, 03/19/2023'
+    date_f_items = date_f.split(',')
+    weekday, date = date_f_items[0], date_f_items[1].strip()
+    date_nums = date.split('/')
+    if date_nums[0][0] == '0':
+        date_nums[0] = date_nums[0][1]
+    if date_nums[1][0] == '0':
+        date_nums[1] = date_nums[1][1]
+    date = '/'.join(date_nums)
+    display_date = weekday + ', ' + date
+    return display_date
+
 def get_weather():
+    # Fetch weather data using your unique API key from https://openweathermap.org/
+
     city = entry.get()
-    API_KEY = open('api_key.txt', 'r').read()
+    #API_KEY = open('api_key.txt', 'r').read()
+    API_KEY = '8420a82670643d7af6e8530781a0f36e'
     url = 'http://api.openweathermap.org/data/2.5/weather'
     parameters = {
         'q':city,
@@ -15,28 +35,75 @@ def get_weather():
         'units':'imperial'
     }
     response = requests.get(url, params=parameters)
+    status_code = response.status_code
     response = response.json()
     try:
-        temperature = str(round(response['main']['temp'])) + " °F"
-        wind = str(round(response['wind']['speed'])) + " mph"
-        cloud = str(response['clouds']['all']) + "% cloudy"
+        # Store weather details from API
+        summary = "Description:   " + response['weather'][0]['description'].title()
+        real_temp = "Temperature:   " + str(round(response['main']['temp'])) + " °F"
+        feels_like = "Real Feel:   " + str(round(response['main']['feels_like'])) + " °F"
+        wind = "Wind:   " + str(round(response['wind']['speed'])) + " mph"
+        cloud = "Cloudiness:   " + str(response['clouds']['all']) + "% cloudy"
 
-        location_.configure(text=city + " Weather")
-        temperature_.configure(text=temperature)
+        # Check for rain or snow (included in JSON only if present in current weather conditions)
+        rain = 0
+        snow = 0
+        if 'rain' in response:
+            rain = "Rain:   " + str(response['rain']['1h']) + " in"
+        else:
+            rain = ''
+        rain_.configure(text=rain)
+        if 'snow' in response:
+            snow = "Snow:   " + str(response['snow']['1h']) + " in"
+        else:
+            snow = ''
+        snow_.configure(text=snow)
+        timezone = round(response['timezone'] / 3600)
+        if timezone >= 0:
+            timezone = "Timezone:   " + "UTC+" + str(timezone)
+        else:
+            timezone = "Timezone:   " + "UTC" + str(timezone)
+
+        # Format city name for display and retrieve date
+        city = city.title()
+        display_city = city.split(',')[0]
+        display_date = get_date()
+
+        # Configure the rest of the widgets
+        heading_.configure(text=display_city + " Weather")
+        date_.configure(text=display_date)
+        summary_.configure(text=summary)
+        real_temp_.configure(text=real_temp)
+        feels_like_.configure(text=feels_like)
         wind_.configure(text=wind)
         cloud_.configure(text=cloud)
+        timezone_.configure(text=timezone)
     except:
-        pass
+        tkinter.messagebox.showinfo("Error",f"Error fetching weather data: City not found.\nStatus code {status_code}.")
 
+def show_info():
+    message_info = "Last updated March 19, 2023.\nMade by Justin Liu."
+    tkinter.messagebox.showinfo(title="Info", message=message_info)
 
+# Create tkinter window
 root = Tk()
-root.title("Weather Forecast - Best Bike Days")
-root.configure(bg="#1C9CF6")
-root.geometry("450x750")        # dimensions in width x height
 
-title = Label(root, text="What's the weather?", width=40, font=("Calibri 30 bold"), bg="#1C9CF6", fg="white")
+# Create menu / tool bar
+menubar = Menu(root)
+help_menu = Menu(menubar, tearoff=0)
+help_menu.add_command(label="About", command=show_info)
+help_menu.add_separator()
+help_menu.add_command(label="Exit", command=root.quit)
+menubar.add_cascade(label="Help", menu=help_menu)
+
+# Configure the window
+root.configure(menu=menubar, bg="#1C9CF6")
+root.title("Weather Tool - Current Weather")
+root.geometry("600x720")        # window dimensions in width x height
+
+# Add widgets - pack() automatically positions widgets without needing specific coordinates
+title = Label(root, text="What's the current weather?", width=40, font=("Calibri 30 bold"), bg="#1C9CF6", fg="white")
 title.pack(pady=3)
-
 
 canvas = Canvas(root, width=240, height=135)
 canvas.pack()
@@ -51,15 +118,29 @@ entry = Entry(root, width=50)
 entry.pack()
 sample = Label(root, text='Example: "Alexandria" or "Alexandria,VA,US"', font=("Calibri 10"), bg="#1C9CF6", fg="white")
 sample.pack()
-tk.Button(root, text="Search", width=10, command=get_weather).pack(pady=7)
+search = tk.Button(root, text="Search", width=10, command=get_weather)
+search.pack(pady=7)
+root.bind("<Return>", lambda event: search.invoke())
 
-location_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
-temperature_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
+heading_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
+heading_.pack()
+date_ = Label(root , font=("Calibri 10"), bg="#1C9CF6", fg="white")
+date_.pack()
+summary_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
+summary_.pack()
+real_temp_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
+real_temp_.pack()
+feels_like_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
+feels_like_.pack()
 wind_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
-cloud_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
-location_.pack()
-temperature_.pack()
 wind_.pack()
+cloud_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
 cloud_.pack()
+rain_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
+rain_.pack()
+snow_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
+snow_.pack()
+timezone_ = Label(root , font=("Calibri 18"), bg="#1C9CF6", fg="white")
+timezone_.pack()
 
 root.mainloop()
