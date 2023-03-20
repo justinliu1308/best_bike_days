@@ -26,6 +26,7 @@ def get_weather():
     # Fetch weather data using your unique API key from https://openweathermap.org/
 
     city = entry.get()
+    search_history.append(city)
     #API_KEY = open('api_key.txt', 'r').read()
     API_KEY = '8420a82670643d7af6e8530781a0f36e'
     url = 'http://api.openweathermap.org/data/2.5/weather'
@@ -85,11 +86,29 @@ def show_info():
     message_info = "Last updated March 19, 2023.\nMade by Justin Liu."
     tkinter.messagebox.showinfo(title="Info", message=message_info)
 
+def check_history():
+    if len(search_history) == 0:
+        history_info = "There is no history to show."
+    else:
+        while len(search_history) > 10:
+            search_history.pop(0)
+        location_string = ''
+        for item in reversed(search_history):
+            location_string += "\n" + item
+        history_info = "Showing last 10 location searches:\n" + location_string
+    tkinter.messagebox.showinfo(title="Search History", message=history_info)
+
 # Create tkinter window
 root = Tk()
 
 # Create menu / tool bar
 menubar = Menu(root)
+
+history_menu = Menu(menubar, tearoff=0)
+history_menu.add_command(label="Show History", command=check_history)
+menubar.add_cascade(label="Search History", menu=history_menu)
+search_history = []
+
 help_menu = Menu(menubar, tearoff=0)
 help_menu.add_command(label="About", command=show_info)
 help_menu.add_separator()
