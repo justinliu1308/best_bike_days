@@ -19,7 +19,7 @@ Daily weather requirements that would result in a recommendation for biking are:
 3. For the command line interface applications (current_weather.py and best_bike_days.py), set the 'city' variable at the bottom of the file to your city name and run the python file. The string can just be '{city}', or it can be '{city},{state},{country}'. For example: 'Arlington' or 'Arlington,VA,US'. By just using the city, openweathermap may return the wrong weather data since not all city names are unique. Therefore, it is recommended to use city, state, and country.
 
 ## Weather API details
-- In both versions of current_weather.py, data is fetched from https://openweathermap.org/ regarding the current day.
+- In both versions of current_weather.py, data is fetched from https://openweathermap.org/ for the current day.
 - In best_bike_days.py, the specified city is geocoded through the geocoding API from https://openweathermap.org/, and the returned coordinates are used to fetch the 16-day weather forecast from https://open-meteo.com/.
 - Originally, openweathermap was considered for a multi-day forecast, but their free API only provides multi-day forecast in the form of 5 day / 3 hour forecast data (an exessive 40 sets of data limited to only 5 days). The 16 day forecast, which is more suitable, requires a paid subscription - so instead, open-meteo is used as it provides a 16-day forecast free of charge.
 
