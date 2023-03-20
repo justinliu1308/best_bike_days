@@ -14,7 +14,6 @@ Daily weather requirements that would result in a recommendation for biking are:
 - The recommendation also considers wind gusts and the apparent temperature / real feel
 
 ## Usage
-Usage:
 1. Obtain a free API key from https://openweathermap.org/ and add it to a new file "api_key.txt". This is necessary for all the applications.
 2. For the GUI (current_weather_v2.py), just run the file. 
 3. For the command line interface applications (current_weather.py and best_bike_days.py), set the 'city' variable at the bottom of the file to your city name and run the python file. The string can just be '{city}', or it can be '{city},{state},{country}'. For example: 'Arlington' or 'Arlington,VA,US'. By just using the city, openweathermap may return the wrong weather data since not all city names are unique. Therefore, it is recommended to use city, state, and country.
