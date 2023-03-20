@@ -26,15 +26,15 @@ Usage:
 
 ## Output
 Current weather version 2:
-![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/weather_gui_tool_rain.png)
+![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_rain.png)
 
 Current weather:
 
-![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/current_weather_screenshot.png)
+![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/current_weather_screenshot.png)
 
 Best bike days recommendations:
 
-![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/best_bike_days_screenshot.png)
+![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/best_bike_days_screenshot.png)
 
 ## Reference
 Open Weather Map website: https://openweathermap.org/
