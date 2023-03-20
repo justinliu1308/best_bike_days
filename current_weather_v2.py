@@ -27,8 +27,7 @@ def get_weather():
 
     city = entry.get()
     search_history.append(city)
-    #API_KEY = open('api_key.txt', 'r').read()
-    API_KEY = '8420a82670643d7af6e8530781a0f36e'
+    API_KEY = open('api_key.txt', 'r').read()
     url = 'http://api.openweathermap.org/data/2.5/weather'
     parameters = {
         'q':city,
@@ -90,12 +89,12 @@ def check_history():
     if len(search_history) == 0:
         history_info = "There is no history to show."
     else:
-        while len(search_history) > 10:
+        while len(search_history) > 15:
             search_history.pop(0)
         location_string = ''
         for item in reversed(search_history):
             location_string += "\n" + item
-        history_info = "Showing last 10 location searches:\n" + location_string
+        history_info = "Showing last 15 location searches:\n" + location_string
     tkinter.messagebox.showinfo(title="Search History", message=history_info)
 
 # Create tkinter window
