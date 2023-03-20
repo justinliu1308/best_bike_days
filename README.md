@@ -36,6 +36,9 @@ Best bike days recommendations:
 
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/best_bike_days_screenshot.png)
 
+## Future Updates
+Next steps are to upgrade the 16-day best bike days forecast from a command line output to a GUI interface like current_weather_v2.py.
+
 ## Reference
 Open Weather Map website: https://openweathermap.org/
 
