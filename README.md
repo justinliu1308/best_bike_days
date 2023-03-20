@@ -7,11 +7,11 @@ There are three applications in this repo:
 2. current_weather.py  -  Creates a simple, organized table via command line showing the current weather of a specified city.
 3. best_bike_days.py  -  Returns command line table of recommendations for biking days based on the 16-day weather forecast of a specified city.
 
-Daily weather requirements that would result in a recommendation for biking are:
+Daily weather forecasts that result in a recommendation for biking require the following conditions:
 - Temperature between 55-85 °F
 - Wind speed no more than 15 mph
-- No preciptation forecasted for the day, and less than 0.2 inches of precipitation in the previous 24 hours
-- The recommendation also considers wind gusts and the apparent temperature / real feel
+- No preciptation for the day and less than 0.2 inches of precipitation in the previous 24 hours
+- Acceptable wind gusts and satisfactory apparent temperature / real feel
 
 ## Usage
 1. Obtain a free API key from https://openweathermap.org/ and add it to a new file "api_key.txt". This is necessary for all the applications.
