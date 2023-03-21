@@ -24,11 +24,15 @@ Daily weather forecasts that result in a recommendation for biking require the f
 - Originally, openweathermap was considered for a multi-day forecast, but their free API only provides multi-day forecast in the form of 5 day / 3 hour forecast data (an exessive 40 sets of data limited to only 5 days). The 16 day forecast, which is more suitable, requires a paid subscription - so instead, open-meteo is used as it provides a 16-day forecast free of charge.
 
 ## Output
-Current weather version 2:
+Current weather version 2 GUI:
 
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_rain.png)
 
+Current weather version 2 menubar:
+
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_menu1.png) ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_menu2.png)
+
+Current weather version 2 menu items:
 
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_history.png) ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_about.png)
 
