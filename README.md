@@ -28,6 +28,10 @@ Current weather version 2:
 
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_rain.png)
 
+![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_menu1.png) ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_menu2.png)
+
+![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_history.png) ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/weather_gui_tool_about.png)
+
 Current weather:
 
 ![alt text](https://github.com/justinliu1308/best_bike_days/blob/main/screenshots/current_weather_screenshot.png)
